@@ -5,20 +5,19 @@ def store_file():
 def open_file():
     print("file opened")
 
-while(1):
-    print("#"*5 + " WELCOME TO PROSAFE " + "#"*5)
-    print("\n")
-    print("Choose your option: ")
-    print("1.STORE FILE")
-    print("2.OPEN FILE")
-    print("3.QUIT PROSAFE")
-    print("\n")
+print("#"*5 + " WELCOME TO PROSAFE " + "#"*5)
+print("\n")
+print("Choose your option: ")
+print("1.STORE FILE")
+print("2.OPEN FILE")
+print("3.QUIT PROSAFE")
+print("\n")
   
-    i = int(input(">> "))
+i = int(input(">> "))
   
-    if i == 1:
-        store_file()
-    elif i == 2:
-        open_file()
-    else:
-        break
+if i == 1:
+    store_file()
+elif i == 2:
+    open_file()
+else:
+    print("wrong")
