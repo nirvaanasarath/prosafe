@@ -1,19 +1,25 @@
 import json
+import sqlite3
+
+con = sqlite3.connect("userdatabase.db")
+c = con.cursor()
+try:
+    c.execute('''CREATE TABLE USERINFO([generated_id] INTEGER PRIMARY KEY,NAME CHAR(20) NOT NULL,PASSWORD CHAR(20) NOT NULL)''')
+except sqlite3.Error as error:
+    print("Table already exist's")
+    
 
 def create_new():
-    # file = open("user_data.json","a")
-    new_usr_name = input("Enter your name ")
-    new_use_pswd = input("Enter your psswd ")
-    my_dict = ({new_usr_name : new_use_pswd})
-    j =  json.dumps([my_dict])
-    with open("user_data.json","a") as f:
-        f.write(j)
-        f.close()
+    new_name = input("Enter your user name")
+    new_psswd = input("Enter your passwd")
+    c.execute('''INSERT INTO USERINFO(NAME,PASSWORD) VALUES(?,?)''',(new_name,new_psswd))
+    con.commit()
+    c.close()
 
-def usr_info(usr_name):
-    data = json.load(open("user_data.json","r"))
-    key = data.get(usr_name)
-    return key
+
+    
+
+   
 
 
 
@@ -21,11 +27,19 @@ ch = int(input("Are you an existing user \n If yes = 1 If no = 0 > "))
 
 if ch == 1:
     usr_name = input("Enter your user name ")
-    psswd = input("Enter your password ")
-    rkey = usr_info(usr_name)
-    
-    if rkey == psswd:
-        print("LOG IN SUCESS")
+    psswd = str(input("Enter your password "))
+    con = sqlite3.connect("userdatabase.db")
+    c = con.cursor()
+    k = c.execute('''SELECT PASSWORD FROM USERINFO WHERE NAME=?''',(usr_name,))
+    tupledata = k.fetchone() 
+    c.close()
+    for i in tupledata:
+        key = i
+        
+    # key = tupledata(0,)
+
+    if key == psswd:
+        print("LOGIN SUCESS")
     else:
         print("LOGIN FAILED")
 
