@@ -4,7 +4,9 @@ import base64
 org_pass = 123456
 
 def store_file():
-    print("file stored")
+    type_file = input("What is the extension of the file you want to store today")
+    
+
 
 
 def open_file():
