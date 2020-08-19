@@ -1,4 +1,3 @@
-import json
 import sqlite3
 
 con = sqlite3.connect("userdatabase.db")
@@ -17,12 +16,6 @@ def create_new():
     c.close()
 
 
-    
-
-   
-
-
-
 ch = int(input("Are you an existing user \n If yes = 1 If no = 0 > "))
 
 if ch == 1:
@@ -33,8 +26,14 @@ if ch == 1:
     k = c.execute('''SELECT PASSWORD FROM USERINFO WHERE NAME=?''',(usr_name,))
     tupledata = k.fetchone() 
     c.close()
-    for i in tupledata:
-        key = i
+    try:
+        for i in tupledata:
+            key = i
+    except:
+        print("No such user exist's")
+        print("PROSAFE TERMINATED")
+        break
+        
         
     # key = tupledata(0,)
 
