@@ -37,6 +37,7 @@ def user_validation():
 
         if key == psswd:
             print("LOGIN SUCESS")
+            return usr_name
         else:
             print("LOGIN FAILED")
             exit()
