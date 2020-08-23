@@ -1,7 +1,7 @@
-/.git
-/.vscode
-/__pycache__
-/userdatabase.db
-/stackoverflow Q
-/hai
-/tests.py
+.git
+.vscode
+__pycache__
+*.db
+stackoverflow Q
+hai.txt
+tests.py
