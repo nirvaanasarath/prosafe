@@ -19,12 +19,6 @@ def open_stored_file():
 def store_file():
     con = sqlite3.connect("userdatabase.db")
     c = con.cursor()
-    # c.execute("SELECT count(name) FROM sqlite_master WHERE type='table' AND name=? ", (Lusr_name,))
-    # tb = c.fetchone()
-    # if tb == None: 
-        # pass
-    # else:
-        # print("table does not exist") 
     try:
         c.execute('''CREATE TABLE USERDATAS(FILENAME VARCHAR(20),FILEEXT VARCHAR(5),DATA BLOB)''')
     finally:
@@ -50,9 +44,6 @@ def store_file():
   
 def open_file():
     print("file opened")
-
-
-
 
 t = 1
 while(t):
