@@ -10,17 +10,26 @@ def text_store(file_name,file_ext,file_data):
     con.commit()
     c.close()
 
-def open_stored_file():
+def open_stored_file(fname,fext):
     con = sqlite3.connect("userdatabase.db")
     c = con.cursor()
-    c.execute('''SELECT TEXTDATA FROM USERINFO WHERE ''')
+    c.execute('''SELECT * FROM USERDATAS''')
+    d = c.fetchall()
+    for i in d:
+        data = i[2]
+    datas = bytes(data,'utf-8')
+    with open (fname+'.'+fext,"wb") as f:
+        f.write(datas)
+        
 
 
 def store_file():
     con = sqlite3.connect("userdatabase.db")
     c = con.cursor()
     try:
-        c.execute('''CREATE TABLE USERDATAS(FILENAME VARCHAR(20),FILEEXT VARCHAR(5),DATA BLOB)''')
+        c.execute('''CREATE TABLE IF NOT TABLE EXIST USERDATAS(FILENAME VARCHAR(20),FILEEXT VARCHAR(5),DATA BLOB)''')
+    except:
+        print("table already exists")
     finally:
         print("TABLE EXISTS")
     print("What is the type of file you want to store")
@@ -41,9 +50,15 @@ def store_file():
         print("UNAVAILABE OPTION--CONTACT ADMIN")
         exit()
 
-  
 def open_file():
-    print("file opened")
+    fname = input("enter the name of the file")
+    fext = input("Enter the extension of the file")
+    D = open_stored_file(fname,fext)
+    if D == int(1):
+        print("YOUR FILE IS SUCESSFULLY RESTORED")
+    else:
+        print("FILE RESTORATION FAILED")
+    
 
 t = 1
 while(t):
