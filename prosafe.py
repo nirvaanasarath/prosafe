@@ -51,16 +51,16 @@ def store_file():
     try:
         c.execute('''CREATE TABLE  USERDATAS(FILENAME VARCHAR(20),FILEEXT VARCHAR(5),DATA BLOB)''')
     except:
-        print("table already exists")
-    finally:
-        print("TABLE EXISTS")
+        print("PLEASE CHOOSE")
+    print("\n")
+    print("\n")
+
     print("What is the type of file you want to store")
     dic = {"TEXT = 1":".txt","IMAGE = 2":".img",}
     for i in dic:
         print(i)
     usr_ch = int(input("Enter your choice"))
     if usr_ch == int(1):
-        text_path = input("Drop your file here  ")
         file_name =  input("Enter your file name  ")
         file_ext = input("Enter the file extension")
         with open(file_name+"."+file_ext,"r") as f:
@@ -98,9 +98,11 @@ def show_files():
     c = con.cursor()
     c.execute("SELECT FILENAME FROM USERDATAS")
     data = c.fetchall()
+    print("These are your current file's stored in PROSAFE")
     for i in data:
         print(i[0])
-    con.close()
+    print("\n")
+    c.close()
 
 t = 1
 while(t):
