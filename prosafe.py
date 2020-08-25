@@ -100,7 +100,7 @@ def show_files():
     data = c.fetchall()
     for i in data:
         print(i[0])
-    
+    con.close()
 
 t = 1
 while(t):
