@@ -10,17 +10,39 @@ def text_store(file_name,file_ext,file_data):
     con.commit()
     c.close()
 
-def open_stored_file(fname,fext):
+def image_store(file_name,file_ext,file_data):
     con = sqlite3.connect("userdatabase.db")
     c = con.cursor()
-    c.execute('''SELECT * FROM USERDATAS''')
-    d = c.fetchall()
-    for i in d:
-        data = i[2]
-    datas = bytes(data,'utf-8')
-    with open (fname+'.'+fext,"wb") as f:
-        f.write(datas)
-        
+    c.execute('''INSERT INTO USERDATAS(FILENAME,FILEEXT,DATA) VALUES(?,?,?)''',(file_name,file_ext,file_data))
+    con.commit()
+    c.close()
+
+
+
+def open_stored_file(usr_ch,fname,fext):
+    if usr_ch == int(1):
+        con = sqlite3.connect("userdatabase.db")
+        c = con.cursor()
+        c.execute("SELECT DATA FROM USERDATAS WHERE FILENAME=?",(fname,))
+        d = c.fetchone()
+        for i in d:
+            data = i[0]
+        datas = bytes(data,'utf-8')
+        with open (fname+'.'+fext,"wb") as f:
+            f.write(datas)
+        return 1    
+    elif usr_ch == int(2):
+        con = sqlite3.connect("userdatabase.db")
+        c = con.cursor()
+        c.execute("SELECT DATA FROM USERDATAS WHERE FILENAME=?",(fname,))
+        d = c.fetchone()
+        imdata = d[0]
+        with open(fname+'.'+fext,"wb") as d:
+            d.write(imdata) 
+        return 1
+    else:
+        print("invalid file extension")          
+            
 
 
 def store_file():
@@ -38,22 +60,34 @@ def store_file():
         print(i)
     usr_ch = int(input("Enter your choice"))
     if usr_ch == int(1):
-        text_path = input("Drop your file here")
-        file_name =  input("Enter your file name")
+        text_path = input("Drop your file here  ")
+        file_name =  input("Enter your file name  ")
         file_ext = input("Enter the file extension")
         with open(file_name+"."+file_ext,"r") as f:
             file_data = f.read()
         text_store(file_name,file_ext,file_data)
     elif usr_ch == int(2):
-        image_store()
+        fname = input("Enter your file name")
+        fext = input("Enter your file ext")
+        with open(fname+"."+fext,"rb") as f:
+            data = f.read()
+        image_store(fname,fext,data)
     else:
         print("UNAVAILABE OPTION--CONTACT ADMIN")
         exit()
 
 def open_file():
-    fname = input("enter the name of the file")
-    fext = input("Enter the extension of the file")
-    D = open_stored_file(fname,fext)
+    fname = input("enter the name of the file  ")
+    fext = str(input("Enter the extension of the file  "))
+    if fext == 'txt':
+        usr_ch = int(1)
+        D = open_stored_file(usr_ch,fname,fext)
+    else:
+        usr_ch = 2
+        D = open_stored_file(usr_ch,fname,fext)
+
+
+
     if D == int(1):
         print("YOUR FILE IS SUCESSFULLY RESTORED")
     else:
